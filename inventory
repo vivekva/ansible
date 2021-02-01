@@ -1,0 +1,15 @@
+[dev]
+172.31.20.158
+
+[web]
+172.31.27.20
+
+[prod]
+172.31.31.102
+
+[keys:children]
+dev
+web
+prod                                                                                                                                                                        
+[keys:vars]
+ansible_ssh_private_key_file=/home/ec2-user/viv_key.pem
