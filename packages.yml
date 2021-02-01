@@ -1,0 +1,39 @@
+---
+- name: install packages in dev and web groups
+  hosts: 
+    - dev
+    - web
+  become: yes
+  tasks:
+  - name: install apache
+    yum:
+      name: httpd
+      state: latest
+  - service:
+      name: httpd
+      enabled: true
+      state: started
+
+- name: install group packages in prod group
+  hosts: prod
+  become: yes
+  tasks:
+  - name: install development  tool
+    yum: 
+      name: "@Development Tools"
+      state: latest
+
+- name: update all packages in dev group
+  hosts: dev 
+  become: yes
+  tasks: 
+  - name: update all packages
+    yum:
+      name: "*"
+      state: latest
+
+
+
+
+
+     
