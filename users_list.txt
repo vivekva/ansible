@@ -1,0 +1,9 @@
+users:
+  - name: vivek
+    department: development
+  - name: jobin
+    department: development
+  - name: tom
+    department: manager
+  - name: jerry
+    department: manager  

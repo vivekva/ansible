@@ -1,0 +1,27 @@
+---
+- name: create users in development group
+  hosts: dev
+  become: yes
+  vars_files:
+    - users_list.txt
+    - vault.yml
+  tasks:
+    - user:
+        name: "{{ item.name }}"    
+        password: "{{ pw_development | password_hash('sha512') }}"
+      when: item.department == 'development'
+      loop: "{{ users }}"
+
+- name: create users in production group 
+  hosts: prod
+  become: yes
+  vars_files:
+    - users_list.txt
+    - vault.yml
+  tasks:
+    - user:
+        name: "{{ item.name }}"
+        password: "{{ pw_manager | password_hash('sha512') }}"
+      when: item.department == 'manager'
+      loop: "{{ users }}"   
+       
