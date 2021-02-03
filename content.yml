@@ -1,0 +1,9 @@
+---
+- name: change content
+  hosts: all
+  become: yes
+  tasks:
+  - name: change content in dev group
+    copy:
+      content: "{{ data }}"
+      dest: /etc/issue 

@@ -1,0 +1,14 @@
+---
+- name: infomartion of hosts
+  hosts: all
+  become: yes
+  tasks:
+    - lineinfile: 
+        path: /root/result.txt
+        line: "{{ item }}"
+        create: yes
+      loop:
+        - "inventory hostname : {{ inventory_hostname }}"
+        - "Total Memory : {{ ansible_memory_mb.real.total }}"
+        - "Bios Version : {{ ansible_bios_version }}"
+        - "xvda Size : {{ ansible_devices.xvda.size }}"
