@@ -1,0 +1,11 @@
+---
+- name: Time Synchronization
+  hosts: all
+  become: yes
+  vars:
+    timesync_ntp_servers: 
+      - hostname: 1.rhel.pool.ntp.org
+        iburst: yes
+  roles:
+    - rhel-system-roles.timesync
+  
