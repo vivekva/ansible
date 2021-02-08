@@ -1,0 +1,8 @@
+---
+
+- src: https://github.com/bennojoy/nginx
+  scm: git
+  version: master
+  name: bash_env
+
+
