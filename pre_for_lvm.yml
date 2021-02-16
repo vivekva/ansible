@@ -1,0 +1,31 @@
+---
+- name: create Volume Group
+  hosts: all
+  become: yes
+  tasks:
+    - name: install LVM package
+      yum:
+        name: lvm2
+        state: latest      
+    - name: create partions
+      parted:
+        device: /dev/xvdf
+        number: 1
+        flags: [ lvm ]
+        state: present
+        part_end: 1600MiB
+      register: first_attempt
+      ignore_errors: true
+    - parted:
+        device: /dev/xvdf
+        number: 1
+        flags: [ lvm ]
+        state: present
+        part_end: 900MiB
+      ignore_errors: true
+      when: first_attempt is not succeeded
+    - name: create volume group reseach
+      lvg:
+        vg: research
+        pvs: /dev/xvdf1 
+            

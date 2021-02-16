@@ -3,30 +3,6 @@
   hosts: all
   become: yes
   tasks:
-    - name: install LVM package
-      yum:
-        name: lvm2
-        state: latest      
-    - name: create partions
-      parted:
-        device: /dev/xvdf
-        number: 1
-        flags: [ lvm ]
-        state: present
-        part_end: 1600MiB
-      register: first_attempt
-      ignore_errors: true
-    - parted:
-        device: /dev/xvdf
-        number: 1
-        flags: [ lvm ]
-        state: present
-        part_end: 900MiB
-      when: first_attempt is not succeeded
-    - name: create volume group reseach
-      lvg:
-        vg: research
-        pvs: /dev/xvdf1 
     - name: create LVM
       block:
         - name: Create LVM of 1500MiB size
@@ -42,9 +18,9 @@
             vg: research
             lv: data 
             size: 800m
+          register: vg_group
       always:      
         - name: display messsage
           debug:
             msg: " volume group research is not found "
-          when: 
-         
+          when: vg_group is not succeeded        
